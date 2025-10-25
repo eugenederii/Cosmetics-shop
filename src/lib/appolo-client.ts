@@ -1,16 +1,37 @@
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+// src/lib/apollo.ts
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  NormalizedCacheObject,
+} from "@apollo/client";
+import fetch from "cross-fetch";
 
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/api/2025-10/graphql.json`,
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token":
-        process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN!,
-    },
-  }),
+export type ApolloClientInstance = ApolloClient<NormalizedCacheObject>;
 
-  cache: new InMemoryCache(),
-});
+export const getApolloClient = (
+  isServer = typeof window === "undefined",
+): ApolloClientInstance => {
+  const uri = `https://${
+    isServer
+      ? process.env.SHOPIFY_STORE_DOMAIN
+      : process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN
+  }/api/2025-10/graphql.json`;
 
-export default client;
+  const token = isServer
+    ? process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN
+    : process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+
+  return new ApolloClient({
+    ssrMode: isServer,
+    link: new HttpLink({
+      uri,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": token!,
+      },
+      fetch: isServer ? fetch : undefined,
+    }),
+    cache: new InMemoryCache(),
+  });
+};
