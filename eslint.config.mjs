@@ -34,6 +34,7 @@ export default defineConfig([
       "@next/next/no-img-element": "off",
       "import/no-unresolved": "off",
       "prettier/prettier": "off",
+      "@typescript-eslint/no-explicit-any": "off",
 
       // React Hooks
       "react-hooks/rules-of-hooks": "error",
