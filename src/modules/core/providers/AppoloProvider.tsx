@@ -2,7 +2,7 @@
 
 import type { ReactNode, FC } from "react";
 import { ApolloProvider } from "@apollo/client/react";
-import { getApolloClient } from "@/lib/appolo-client";
+import { getApolloClient } from "@/lib/apollo-client";
 
 type AppoloWraperProps = {
   children: ReactNode;

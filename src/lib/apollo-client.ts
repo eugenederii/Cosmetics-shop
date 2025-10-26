@@ -1,4 +1,3 @@
-// src/lib/apollo.ts
 import {
   ApolloClient,
   InMemoryCache,
