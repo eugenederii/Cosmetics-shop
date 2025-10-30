@@ -12,6 +12,8 @@ export default function Home() {
 
   const products = data?.products?.edges ?? [];
 
+  console.log(products);
+
   return (
     <main className="min-h-screen bg-gray-50">
       <Header />

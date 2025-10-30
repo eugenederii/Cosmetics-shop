@@ -30,7 +30,6 @@ export const MobileMenu: FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           />
         </div>
 
-        {/* Навігація для мобільного */}
         <div className="h-full overflow-y-auto p-6">
           <nav className="flex flex-col space-y-6">
             {headerConfig.mainNav.map((category) => (
