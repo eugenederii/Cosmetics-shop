@@ -1,19 +1,19 @@
 "use client";
-import { useState } from "react";
 import { MainNav } from "@/modules/navigation/components/main-navigation";
 import { MobileMenu } from "../mobile-menu/mobile-menu";
+import { useBoolean } from "usehooks-ts";
 
 export const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const {
+    value: isMobileMenuOpen,
+    toggle: toggleMobileMenu,
+    setFalse: closeMobileMenu,
+  } = useBoolean(false);
+
   return (
     <header className="sticky top-0 z-50 w-full bg-white">
-      <MainNav
-        onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      />
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-      />
+      <MainNav onMobileMenuToggle={toggleMobileMenu} />
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
     </header>
   );
 };
