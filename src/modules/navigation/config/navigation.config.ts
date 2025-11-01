@@ -17,6 +17,7 @@ export const headerConfig: HeaderConfig = {
         { title: "Пудра", href: "/face/powder" },
         { title: "Рум'яна", href: "/face/blush" },
         { title: "Коректор", href: "/face/concealer" },
+        { title: "Крема", href: "/face/creams" },
       ],
     },
     {

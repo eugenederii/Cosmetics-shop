@@ -8916,20 +8916,28 @@ export enum WeightUnit {
   Pounds = "POUNDS",
 }
 
-export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetProductsQueryVariables = Exact<{
+  first: Scalars["Int"]["input"];
+  after?: InputMaybe<Scalars["String"]["input"]>;
+}>;
 
 export type GetProductsQuery = {
   __typename?: "QueryRoot";
   products: {
     __typename?: "ProductConnection";
+    pageInfo: {
+      __typename?: "PageInfo";
+      hasNextPage: boolean;
+      endCursor?: string | null;
+    };
     edges: Array<{
       __typename?: "ProductEdge";
       node: {
         __typename?: "Product";
         id: string;
         title: string;
-        handle: string;
         description: string;
+        handle: string;
         featuredImage?: { __typename?: "Image"; url: any } | null;
       };
     }>;
@@ -8937,14 +8945,18 @@ export type GetProductsQuery = {
 };
 
 export const GetProductsDocument = gql`
-  query GetProducts {
-    products(first: 5) {
+  query GetProducts($first: Int!, $after: String) {
+    products(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           id
           title
-          handle
           description
+          handle
           featuredImage {
             url
           }
@@ -8966,14 +8978,20 @@ export const GetProductsDocument = gql`
  * @example
  * const { data, loading, error } = useGetProductsQuery({
  *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
  *   },
  * });
  */
 export function useGetProductsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetProductsQuery,
     GetProductsQueryVariables
-  >,
+  > &
+    (
+      | { variables: GetProductsQueryVariables; skip?: boolean }
+      | { skip: boolean }
+    ),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<GetProductsQuery, GetProductsQueryVariables>(
