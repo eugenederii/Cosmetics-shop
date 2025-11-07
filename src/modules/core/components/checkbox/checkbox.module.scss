@@ -1,0 +1,181 @@
+.container {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  padding: 8px;
+  width: fit-content;
+  border-radius: 50%;
+  transition-duration: 0.5s;
+  transition-property: background-color;
+
+  &:hover {
+    background-color: rgba(25, 118, 210, 0.04);
+  }
+
+  &_disabled {
+    cursor: default;
+    pointer-events: none;
+
+    &:hover {
+      background-color: unset;
+    }
+  }
+
+  &_error .checkmark {
+    border: 1px solid #ff3b30;
+  }
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+
+  &:focus-visible + .checkmark {
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px #007aff;
+  }
+}
+
+.checkmark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  height: 24px;
+  width: 24px;
+  background-color: transparent;
+  border: 1px solid #007aff;
+  border-radius: 4px;
+  transition: 0.3s;
+
+  &::before {
+    position: absolute;
+    top: 10px;
+    left: 4px;
+    display: block;
+    content: "";
+    width: 2px;
+    height: 0;
+    background-color: #fff;
+    border-radius: 1px;
+    transform: rotate(-45deg);
+    transform-origin: top right;
+    transition: 0.3s;
+  }
+
+  &::after {
+    position: absolute;
+    top: 15px;
+    left: 6px;
+    display: block;
+    content: "";
+    width: 2px;
+    height: 0;
+    background-color: #fff;
+    border-radius: 1px;
+    transform: rotate(-139deg);
+    transform-origin: top right;
+    transition: 0.3s;
+  }
+
+  &_active {
+    transition: 0.3s;
+    border-color: transparent;
+    background-color: #007aff !important;
+
+    &::before {
+      height: 7px;
+    }
+
+    &::after {
+      height: 13px;
+      transition-delay: 0.15s;
+    }
+  }
+
+  &.small {
+    width: 18px;
+    height: 18px;
+
+    &::before {
+      top: 6px;
+      left: 2px;
+    }
+
+    &::after {
+      top: 10px;
+      left: 4px;
+    }
+
+    &.checkmark_active {
+      &::before {
+        height: 6px;
+      }
+
+      &::after {
+        height: 9px;
+      }
+    }
+  }
+
+  &.medium {
+    width: 24px;
+    height: 24px;
+
+    &::before {
+      top: 9px;
+      left: 4px;
+    }
+
+    &::after {
+      top: 14px;
+      left: 6px;
+    }
+
+    &.checkmark_active {
+      &::before {
+        height: 7px;
+      }
+
+      &::after {
+        height: 12px;
+      }
+    }
+  }
+}
+
+.container input:disabled + .checkmark {
+  border: 1px solid #eaf4ff;
+  padding: 0;
+}
+
+.container input:checked:disabled ~ .checkmark {
+  background-color: #eaf4ff;
+}
+
+@keyframes check1 {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: 7px;
+  }
+}
+
+@keyframes check2 {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: 13px;
+  }
+}
