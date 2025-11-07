@@ -3,7 +3,7 @@ export async function shopifyFetch(query: string, variables = {}) {
   const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
   if (!endpoint || !token) {
-    throw new Error("❌ Missing Shopify environment variables");
+    throw new Error("Missing Shopify environment variables");
   }
 
   try {
@@ -24,7 +24,7 @@ export async function shopifyFetch(query: string, variables = {}) {
 
     return response.json();
   } catch (error) {
-    console.error("💥 Error fetching from Shopify:", error);
+    console.error("Error fetching from Shopify:", error);
     throw error;
   }
 }

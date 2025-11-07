@@ -15,7 +15,7 @@ import { CartButton } from "@/modules/cart/components/cart-button";
 export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
   return (
     <div className="border-b border-gray-100 relative">
-      <div className="container mx-auto px-6">
+      <div className="mx-auto px-6">
         <div className="flex items-center justify-between h-22 gap-4">
           <div className="flex items-center shrink-0">
             <Button
