@@ -1,7 +1,7 @@
 "use client";
 import { FC } from "react";
 
-import { Search, User, Menu } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import { Button } from "@/modules/core/components/button/button";
 import {
   NavigationMenu,
@@ -11,6 +11,7 @@ import { NavItem } from "@/modules/navigation/components/main-nav-item";
 import { headerConfig } from "@/modules/navigation/config/navigation.config";
 import { MainNavProps } from "./main-navigation.interface";
 import { CartButton } from "@/modules/cart/components/cart-button";
+import { UserIconButton } from "@/modules/navigation/components/icon-user-button";
 
 export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
   return (
@@ -51,9 +52,7 @@ export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
             <Button variant="ghost" size="icon">
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
+            <UserIconButton text="Профіль" href="#" />
             <CartButton />
           </div>
         </div>
