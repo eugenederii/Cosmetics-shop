@@ -1,7 +1,7 @@
 "use client";
 import { FC } from "react";
 
-import { Search, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/modules/core/components/button/button";
 import {
   NavigationMenu,
@@ -12,6 +12,7 @@ import { headerConfig } from "@/modules/navigation/config/navigation.config";
 import { MainNavProps } from "./main-navigation.interface";
 import { CartButton } from "@/modules/cart/components/cart-button";
 import { UserIconButton } from "@/modules/navigation/components/icon-user-button";
+import { SearchIconButton } from "../icon-search-button";
 
 export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
   return (
@@ -49,10 +50,9 @@ export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
           </NavigationMenu>
 
           <div className="flex items-center space-x-4 shrink-0">
-            <Button variant="ghost" size="icon">
-              <Search className="h-5 w-5" />
-            </Button>
-            <UserIconButton text="Профіль" href="#" />
+            <SearchIconButton text="Пошук" />
+
+            <UserIconButton text="Подарунки" href="#" />
             <CartButton />
           </div>
         </div>

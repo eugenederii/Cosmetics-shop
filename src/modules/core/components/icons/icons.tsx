@@ -5,6 +5,7 @@ import { FC, memo } from "react";
 import SettingsIcon from "@/assets/icons/lol.svg?icon";
 import NoImage from "@/assets/icons/image-not-found.svg";
 import CloseIcon from "@/assets/icons/close.svg";
+import GiftIcon from "@/assets/icons/gift_line.svg";
 
 import { SVGComponentElement } from "./icons.interface";
 
@@ -12,6 +13,7 @@ export const icons = {
   settings: SettingsIcon,
   noImage: NoImage,
   close: CloseIcon,
+  gift: GiftIcon,
 } satisfies Record<string, FC<SVGComponentElement>>;
 
 export type IconName = keyof typeof icons;
