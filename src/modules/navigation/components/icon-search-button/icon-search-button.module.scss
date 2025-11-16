@@ -1,20 +1,35 @@
 $default-bg: #fffafa;
-$default-clr: #0d0d0b;
+$default-clr: #f32ec8;
 
-.userIconButton {
+.searchIconButton {
   position: relative;
   width: 30px;
   height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  transition: 0.5s;
+  transition: width 0.3s ease;
+
+  &.active {
+    width: 300px;
+
+    &::before {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &::after {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
 
   &::before {
     content: "";
     position: absolute;
-    inset: 11px;
+    right: 11px;
+    top: 11px;
+    left: auto;
+    width: 8px;
+    height: 8px;
     background: var(--background, #{$default-bg});
     box-shadow:
       0 0 0 4px var(--clr, #{$default-clr}),
@@ -24,8 +39,11 @@ $default-clr: #0d0d0b;
     z-index: 0;
   }
 
-  &:hover::before {
-    inset: 5px;
+  &:hover:not(.active)::before {
+    right: 5px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
     background: var(--background, #{$default-bg});
     box-shadow:
       0 0 0 4px transparent,
@@ -36,7 +54,11 @@ $default-clr: #0d0d0b;
   &::after {
     content: "";
     position: absolute;
-    inset: 3px;
+    right: 3px;
+    top: 3px;
+    left: auto;
+    width: 24px;
+    height: 24px;
     background: var(--background, #{$default-bg});
     transform: rotate(45deg);
     transition: 0.5s;
@@ -54,19 +76,27 @@ $default-clr: #0d0d0b;
       var(--background, #{$default-bg});
   }
 
-  &:hover::after {
-    inset: 3px;
+  &:hover:not(.active)::after {
+    right: 3px;
+    top: 3px;
+    width: 24px;
+    height: 24px;
     transform: rotate(0deg);
   }
 }
 
 .iconLink {
-  position: relative;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
   text-decoration: none;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: auto;
 
   .icon {
     width: 1em;
@@ -74,17 +104,6 @@ $default-clr: #0d0d0b;
     transition: 0.5s;
     color: #111111;
     opacity: 1;
-    position: relative;
-    z-index: 2;
-  }
-
-  .giftIcon {
-    opacity: 1;
-  }
-
-  .userIcon {
-    position: absolute;
-    opacity: 0;
   }
 
   .iconText {
@@ -98,15 +117,20 @@ $default-clr: #0d0d0b;
     opacity: 0;
     transition: 0.5s;
     white-space: nowrap;
-    margin-top: 9px;
+    margin-top: 5px;
+  }
+
+  .searchIconButton.active & {
+    opacity: 0;
+    pointer-events: none;
   }
 }
 
-.userIconButton:hover {
+.searchIconButton:hover:not(.active) {
   box-shadow:
-    0 0 8px rgba(218, 165, 32, 0.6),
-    0 0 15px rgba(218, 165, 32, 0.4),
-    0 0 22px rgba(218, 165, 32, 0.3);
+    0 0 8px rgba(243, 46, 200, 0.6),
+    0 0 15px rgba(243, 46, 200, 0.4),
+    0 0 22px rgba(243, 46, 200, 0.3);
 
   .iconLink {
     .icon {
@@ -122,13 +146,42 @@ $default-clr: #0d0d0b;
   }
 }
 
-.userIconButton:hover .iconLink {
-  .giftIcon {
-    opacity: 0;
-    transform: translateY(-1px);
-  }
-  .userIcon {
+.searchInput {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% - 36px);
+  max-width: 264px;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #111111;
+  font-size: 12px;
+  outline: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  z-index: 5;
+
+  .searchIconButton.active & {
     opacity: 1;
-    transform: translateY(-1px);
+    pointer-events: auto;
+    transform: translateX(0);
+    border-color: var(--clr, #{$default-clr});
+    box-shadow: 0 0 12px rgba(243, 46, 200, 0.5);
+    background: var(--background, #{$default-bg});
+    cursor: text;
+  }
+
+  &::placeholder {
+    color: #999;
+  }
+
+  &:focus {
+    border-color: var(--clr, #{$default-clr});
+    box-shadow: 0 0 12px rgba(243, 46, 200, 0.6);
   }
 }
