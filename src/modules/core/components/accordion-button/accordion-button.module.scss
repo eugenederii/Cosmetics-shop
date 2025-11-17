@@ -1,0 +1,170 @@
+// components/HamburgerMenu.module.scss
+.container {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 6px;
+}
+
+.menuBar {
+  width: 10px;
+  height: 2px;
+  margin: 2px 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: #000;
+
+  transform-origin: center;
+  animation-duration: 0.35s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  will-change: transform;
+}
+
+@keyframes topBarOpen {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+  100% {
+    transform: translateY(4px) rotate(45deg);
+  }
+}
+
+@keyframes bottomBarOpen {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(-4px) rotate(135deg);
+  }
+}
+
+@keyframes middleBarOpen {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+  51% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes topBarClose {
+  0% {
+    transform: translateY(4px) rotate(45deg);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bottomBarClose {
+  0% {
+    transform: translateY(-4px) rotate(135deg);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes middleBarClose {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(0);
+  }
+  51% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.isOpen {
+  .menuBar {
+    box-shadow: none;
+    background-color: #f32ec8;
+  }
+
+  .menuBar:first-child {
+    animation-name: topBarOpen;
+  }
+
+  .menuBar:last-child {
+    animation-name: bottomBarOpen;
+  }
+
+  .menuBar:nth-child(2) {
+    animation-name: middleBarOpen;
+  }
+}
+
+.isClosed {
+  .menuBar:first-child {
+    animation-name: topBarClose;
+  }
+
+  .menuBar:last-child {
+    animation-name: bottomBarClose;
+  }
+
+  .menuBar:nth-child(2) {
+    animation-name: middleBarClose;
+  }
+}
+
+:global([data-state="open"]) .container {
+  .menuBar {
+    box-shadow: none;
+    background-color: #f32ec8;
+  }
+  .menuBar:first-child {
+    animation-name: topBarOpen;
+  }
+  .menuBar:last-child {
+    animation-name: bottomBarOpen;
+  }
+  .menuBar:nth-child(2) {
+    animation-name: middleBarOpen;
+  }
+}
+
+:global([data-state="open"]:hover) .container {
+  border-color: transparent;
+  .menuBar {
+    box-shadow:
+      0 0 10px rgba(243, 46, 200, 0.45),
+      0 0 18px rgba(243, 46, 200, 0.3),
+      0 0 26px rgba(243, 46, 200, 0.22);
+  }
+}
+
+:global([data-state="closed"]) .container {
+  .menuBar:first-child {
+    animation-name: topBarClose;
+  }
+  .menuBar:last-child {
+    animation-name: bottomBarClose;
+  }
+  .menuBar:nth-child(2) {
+    animation-name: middleBarClose;
+  }
+}
