@@ -16,13 +16,17 @@ export const AccordionButton: FC<AccordionButtonProps> = ({
     }
   };
 
+  // When interactive is false, do not add .isOpen/.isClosed classes
+  // CSS will handle state via :global([data-state="open"]) and :global([data-state="closed"])
+  // This prevents hydration mismatches with Radix UI Accordion
   return (
     <div
       onClick={handleClick}
-      className={clsx(styles.container, {
-        [styles.isOpen]: interactive && isOpen,
-        [styles.isClosed]: interactive && !isOpen,
-      })}
+      className={clsx(
+        styles.container,
+        // Only apply state classes when interactive (standalone mode)
+        interactive && (isOpen ? styles.isOpen : styles.isClosed),
+      )}
     >
       <div className={styles.menuBar}></div>
       <div className={styles.menuBar}></div>

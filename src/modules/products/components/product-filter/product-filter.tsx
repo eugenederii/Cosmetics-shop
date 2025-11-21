@@ -1,15 +1,35 @@
-import { type FC, useState } from "react";
+"use client";
+
+import { type FC, useState, useMemo } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/modules/core/components//accordion";
+} from "@/modules/core/components/accordion";
 import { ProductFiltersProps } from "./product-filter.interface";
-import { Checkbox } from "@/modules/core/components/checkbox";
+import { ProductFilterOptions } from "@/modules/products/components/product-filter-options";
+import type { ProductFilterOption } from "@/modules/products/components/product-filter-options";
 
 export const ProductFilters: FC<ProductFiltersProps> = () => {
   const [forChildren, setForChildren] = useState(false);
+
+  const categoryOptions = useMemo<ProductFilterOption[]>(
+    () => [
+      {
+        id: "for-children",
+        label: "Для дітей",
+        value: forChildren,
+      },
+    ],
+    [forChildren],
+  );
+
+  const handleCategoryChange = (id: string, checked: boolean) => {
+    if (id === "for-children") {
+      setForChildren(checked);
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg w-[270px] shrink-0  border-gray-200">
@@ -25,21 +45,10 @@ export const ProductFilters: FC<ProductFiltersProps> = () => {
             <span className="font-medium text-sm">Категорія</span>
           </AccordionTrigger>
           <AccordionContent className="px-4 pb-3 max-h-60 overflow-y-auto">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  size="small"
-                  value={forChildren}
-                  onChange={(e) => setForChildren(e.target.checked)}
-                />
-                <span
-                  className="text-sm cursor-pointer"
-                  onClick={() => setForChildren(!forChildren)}
-                >
-                  Для дітей
-                </span>
-              </div>
-            </div>
+            <ProductFilterOptions
+              options={categoryOptions}
+              onChange={handleCategoryChange}
+            />
           </AccordionContent>
         </AccordionItem>
 
