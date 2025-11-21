@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -59,7 +58,7 @@ export function NavigationMenuItem({
 }
 
 export const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50 focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1",
+  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium hover:bg-[rgba(243,46,200,0.1)] hover:text-gray-900 focus:bg-[rgba(243,46,200,0.1)] focus:text-gray-900 disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-[rgba(243,46,200,0.1)] data-[state=open]:text-gray-900 data-[state=open]:focus:bg-[rgba(243,46,200,0.1)] data-[state=open]:bg-[rgba(243,46,200,0.05)] focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1",
 );
 
 export function NavigationMenuTrigger({
@@ -73,11 +72,7 @@ export function NavigationMenuTrigger({
       className={cn(navigationMenuTriggerStyle(), "group", className)}
       {...props}
     >
-      {children}{" "}
-      <ChevronDownIcon
-        className="relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
-        aria-hidden="true"
-      />
+      {children}
     </NavigationMenuPrimitive.Trigger>
   );
 }
@@ -90,10 +85,10 @@ export function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        // Viewport styles
-        "data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 absolute top-full left-1/2 transform -translate-x-1/2 w-full p-2 pr-2.5 md:w-auto",
-        // Non-viewport styles - smooth fade animation
-        "group-data-[viewport=false]/navigation-menu:bg-transparent group-data-[viewport=false]/navigation-menu:text-foreground group-data-[viewport=false]/navigation-menu:overflow-visible group-data-[viewport=false]/navigation-menu:shadow-none group-data-[viewport=false]/navigation-menu:border-0 group-data-[viewport=false]/navigation-menu:data-[state=open]:animate-smooth-fade-in group-data-[viewport=false]/navigation-menu:data-[state=closed]:animate-smooth-fade-out **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none z-50",
+        // Viewport styles - no animations
+        "absolute top-full left-1/2 transform -translate-x-1/2 w-full p-2 pr-2.5 md:w-auto",
+        // Non-viewport styles - no animations, just show/hide
+        "group-data-[viewport=false]/navigation-menu:bg-transparent group-data-[viewport=false]/navigation-menu:text-foreground group-data-[viewport=false]/navigation-menu:overflow-visible group-data-[viewport=false]/navigation-menu:shadow-none group-data-[viewport=false]/navigation-menu:border-0 **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none z-50",
         className,
       )}
       {...props}
