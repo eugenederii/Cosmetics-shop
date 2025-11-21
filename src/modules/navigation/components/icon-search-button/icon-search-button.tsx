@@ -34,6 +34,13 @@ export const SearchIconButton: FC<SearchIconButtonProps> = ({
     }
   }, [isActive, onActiveChange, externalIsActive]);
 
+  // Auto-focus input when it becomes active
+  useEffect(() => {
+    if (isActive) {
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  }, [isActive]);
+
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (externalIsActive === undefined) {
@@ -89,7 +96,7 @@ export const SearchIconButton: FC<SearchIconButtonProps> = ({
           icon="close"
           variant="ghost"
           size="icon"
-          className="absolute left-0 top-0 w-[30px] h-[30px] z-10 pointer-events-auto text-[#f32ec8] border-0 [&_svg]:text-[#f32ec8] [&_svg]:transition-all [&_svg]:duration-500 hover:bg-transparent hover:border-0 hover:text-[#f32ec8] hover:[&_svg]:text-[#f32ec8] hover:[&_svg]:-translate-y-px hover:[&_svg]:scale-[1.125] hover:[&_svg]:drop-shadow-[0_0_8px_rgba(243,46,200,0.6),0_0_15px_rgba(243,46,200,0.4),0_0_22px_rgba(243,46,200,0.3)]"
+          className="absolute right-0 top-0 w-[30px] h-[30px] z-10 pointer-events-auto text-[#f32ec8] border-0 [&_svg]:text-[#f32ec8] [&_svg]:transition-all [&_svg]:duration-500 hover:bg-transparent hover:border-0 hover:text-[#f32ec8] hover:[&_svg]:text-[#f32ec8] hover:[&_svg]:-translate-y-px hover:[&_svg]:scale-[1.125] hover:[&_svg]:drop-shadow-[0_0_8px_rgba(243,46,200,0.6),0_0_15px_rgba(243,46,200,0.4),0_0_22px_rgba(243,46,200,0.3)]"
           aria-label="Закрити пошук"
         />
       )}
