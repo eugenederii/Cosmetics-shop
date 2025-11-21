@@ -22,7 +22,7 @@ export const NavItem: FC<NavItemProps> = ({ title, items }) => {
               <a
                 key={item.href}
                 href={item.href}
-                className="block p-2 hover:bg-gray-50 rounded-md transition-colors text-sm"
+                className="block p-2 hover:bg-[rgba(243,46,200,0.1)] rounded-md transition-colors text-sm"
               >
                 <span className="font-medium text-gray-900">{item.title}</span>
               </a>

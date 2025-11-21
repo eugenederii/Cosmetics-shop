@@ -9,7 +9,8 @@ $default-clr: #f32ec8;
   transition: width 0.3s ease;
 
   &.active {
-    width: 300px;
+    width: 100%;
+    max-width: 100%;
 
     &::before {
       opacity: 0;
@@ -150,8 +151,7 @@ $default-clr: #f32ec8;
   position: absolute;
   left: 0;
   top: 0;
-  width: calc(100% - 36px);
-  max-width: 264px;
+  width: 100%;
   height: 30px;
   padding: 0 8px;
   border: 1px solid transparent;
@@ -174,6 +174,9 @@ $default-clr: #f32ec8;
     box-shadow: 0 0 12px rgba(243, 46, 200, 0.5);
     background: var(--background, #{$default-bg});
     cursor: text;
+    left: 36px;
+    width: calc(100% - 36px);
+    padding-right: 8px;
   }
 
   &::placeholder {

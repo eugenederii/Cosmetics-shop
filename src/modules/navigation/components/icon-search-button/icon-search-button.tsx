@@ -1,26 +1,46 @@
 // components/SearchIconButton.tsx
 "use client";
-import { type FC, useRef, useState } from "react";
+import { type FC, useRef, useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/modules/core/components/button";
 import { SearchIconButtonProps } from "./icon-search-button.interface";
 import styles from "./icon-search-button.module.scss";
 import { useBoolean } from "usehooks-ts";
 
-export const SearchIconButton: FC<SearchIconButtonProps> = ({ href, text }) => {
+export const SearchIconButton: FC<SearchIconButtonProps> = ({
+  href,
+  text,
+  onActiveChange,
+  isActive: externalIsActive,
+}) => {
+  // Use external state if provided, otherwise use internal state
   const {
-    value: isActive,
+    value: internalIsActive,
     setTrue: openInput,
     setFalse: closeInput,
   } = useBoolean(false);
+
+  const isActive =
+    externalIsActive !== undefined ? externalIsActive : internalIsActive;
 
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Notify parent about active state changes
+  useEffect(() => {
+    if (externalIsActive === undefined) {
+      onActiveChange?.(isActive);
+    }
+  }, [isActive, onActiveChange, externalIsActive]);
+
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    openInput();
+    if (externalIsActive === undefined) {
+      openInput();
+    } else {
+      onActiveChange?.(true);
+    }
     setTimeout(() => inputRef.current?.focus(), 0);
   };
 
@@ -29,7 +49,11 @@ export const SearchIconButton: FC<SearchIconButtonProps> = ({ href, text }) => {
     if (!containerRef.current?.contains(e.relatedTarget as Node)) {
       // Якщо input порожній, закриваємо і показуємо кнопку
       if (!value.trim()) {
-        closeInput();
+        if (externalIsActive === undefined) {
+          closeInput();
+        } else {
+          onActiveChange?.(false);
+        }
       }
     }
   };
@@ -41,7 +65,11 @@ export const SearchIconButton: FC<SearchIconButtonProps> = ({ href, text }) => {
   const handleClose = (e: React.MouseEvent) => {
     e.preventDefault();
     setValue("");
-    closeInput();
+    if (externalIsActive === undefined) {
+      closeInput();
+    } else {
+      onActiveChange?.(false);
+    }
   };
 
   return (
@@ -61,7 +89,7 @@ export const SearchIconButton: FC<SearchIconButtonProps> = ({ href, text }) => {
           icon="close"
           variant="ghost"
           size="icon"
-          className="absolute right-0 top-0 w-[30px] h-[30px] z-10 pointer-events-auto text-[#f32ec8] border-0 [&_svg]:text-[#f32ec8] [&_svg]:transition-all [&_svg]:duration-500 hover:bg-transparent hover:border-0 hover:text-[#f32ec8] hover:[&_svg]:text-[#f32ec8] hover:[&_svg]:-translate-y-px hover:[&_svg]:scale-[1.125] hover:[&_svg]:drop-shadow-[0_0_8px_rgba(243,46,200,0.6),0_0_15px_rgba(243,46,200,0.4),0_0_22px_rgba(243,46,200,0.3)]"
+          className="absolute left-0 top-0 w-[30px] h-[30px] z-10 pointer-events-auto text-[#f32ec8] border-0 [&_svg]:text-[#f32ec8] [&_svg]:transition-all [&_svg]:duration-500 hover:bg-transparent hover:border-0 hover:text-[#f32ec8] hover:[&_svg]:text-[#f32ec8] hover:[&_svg]:-translate-y-px hover:[&_svg]:scale-[1.125] hover:[&_svg]:drop-shadow-[0_0_8px_rgba(243,46,200,0.6),0_0_15px_rgba(243,46,200,0.4),0_0_22px_rgba(243,46,200,0.3)]"
           aria-label="Закрити пошук"
         />
       )}
