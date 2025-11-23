@@ -12,7 +12,9 @@ export const ProductContainer: FC = () => {
     <div className="mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold text-gray-900 mb-8">Наші товари</h2>
       <div className="flex justify-between items-start gap-6">
-        <ProductFilters />
+        <div className="hidden md:block">
+          <ProductFilters />
+        </div>
         <ProductGrid products={products} />
       </div>
 

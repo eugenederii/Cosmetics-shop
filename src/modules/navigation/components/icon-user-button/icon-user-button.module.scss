@@ -109,8 +109,12 @@ $default-clr: #0d0d0b;
     0 0 22px rgba(218, 165, 32, 0.3);
 
   .iconLink {
-    .icon {
+    .icon:not(.giftIcon) {
       color: #111111;
+      transform: translateY(-1px);
+    }
+
+    .icon.giftIcon {
       transform: translateY(-1px);
     }
 

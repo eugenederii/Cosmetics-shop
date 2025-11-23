@@ -1,4 +1,3 @@
-// components/IconButton.tsx
 "use client";
 import { type FC } from "react";
 import { User } from "lucide-react";
