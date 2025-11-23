@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import { Menu } from "lucide-react";
 import { Button } from "@/modules/core/components/button/button";
@@ -13,39 +13,57 @@ import { MainNavProps } from "./main-navigation.interface";
 import { CartButton } from "@/modules/cart/components/cart-button";
 import { UserIconButton } from "@/modules/navigation/components/icon-user-button";
 import { SearchIconButton } from "../icon-search-button";
+import { cn } from "@/lib/utils";
+import { useBoolean } from "usehooks-ts";
 
 export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
-  const [isSearchActive, setIsSearchActive] = useState(false);
+  const { value: isSearchActive, setValue: setIsSearchActive } =
+    useBoolean(false);
 
   return (
     <div className="border-b border-gray-100 relative">
       {isSearchActive && (
-        <div className="absolute left-1/2 top-0 bottom-0 transform -translate-x-1/2 flex items-center w-full max-w-xl z-50 pointer-events-none px-6">
-          <div className="pointer-events-auto w-full">
-            <SearchIconButton
-              text="Пошук"
-              onActiveChange={setIsSearchActive}
-              isActive={isSearchActive}
-            />
+        <>
+          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" />
+          <div className="absolute inset-0 flex items-center z-50 pointer-events-none px-4 md:px-6">
+            <div className="pointer-events-auto w-full md:max-w-xl md:mx-auto relative">
+              <div className="absolute -inset-[10px] bg-white/50 backdrop-blur-sm rounded-lg -z-10" />
+              <SearchIconButton
+                text="Пошук"
+                onActiveChange={setIsSearchActive}
+                isActive={isSearchActive}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
-      <div className="mx-auto px-6 relative">
-        <div className="flex items-center justify-between h-22 gap-4 relative">
-          <div className="flex items-center shrink-0">
+      <div className="mx-auto px-4 md:px-6 relative">
+        <div
+          className={cn(
+            "flex items-center justify-between h-22 gap-4 relative",
+            isSearchActive &&
+              "opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto",
+          )}
+        >
+          <div className="flex items-center shrink-0 gap-3 md:gap-0">
             {!isSearchActive && (
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden mr-2"
+                className="md:hidden -ml-2"
                 onClick={onMobileMenuToggle}
               >
                 <Menu className="h-5 w-5" />
               </Button>
             )}
 
-            <div className="text-2xl font-bold text-gray-900 whitespace-nowrap">
+            <div
+              className={cn(
+                "text-2xl font-bold text-gray-900 whitespace-nowrap relative z-50",
+                isSearchActive && "hidden md:block",
+              )}
+            >
               NiceCosmetics
             </div>
           </div>
@@ -67,7 +85,7 @@ export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
             </NavigationMenu>
           )}
 
-          <div className="flex items-center space-x-4 shrink-0">
+          <div className="flex items-center gap-2 md:gap-4 shrink-0">
             {!isSearchActive && (
               <SearchIconButton
                 text="Пошук"
@@ -75,8 +93,15 @@ export const MainNav: FC<MainNavProps> = ({ onMobileMenuToggle }) => {
                 isActive={isSearchActive}
               />
             )}
-            <UserIconButton text="Подарунки" href="#" />
-            <CartButton />
+            <div
+              className={cn(
+                "flex items-center gap-2 md:gap-4 relative z-50",
+                isSearchActive && "hidden md:flex",
+              )}
+            >
+              <UserIconButton text="Подарунки" href="#" />
+              <CartButton />
+            </div>
           </div>
         </div>
       </div>
