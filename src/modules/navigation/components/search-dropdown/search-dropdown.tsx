@@ -13,6 +13,7 @@ import {
 } from "./search-dropdown.interface";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/modules/core/components/button";
+import { useDeviceType } from "@/modules/core/hooks/use-device-type";
 
 const mockSuggestions: SearchSuggestion[] = [
   { id: "1", text: "крем для лиця", href: "/search?q=крем+для+лиця" },
@@ -184,6 +185,8 @@ export const SearchDropdown: FC<SearchDropdownProps> = ({
   isOpen,
   onClose,
 }) => {
+  const deviceType = useDeviceType();
+
   const filteredSuggestions = useMemo(() => {
     if (!searchQuery) return mockSuggestions;
     return mockSuggestions.filter((suggestion) =>
@@ -216,14 +219,14 @@ export const SearchDropdown: FC<SearchDropdownProps> = ({
           <div />
         </PopoverTrigger>
         <PopoverContent
-          className="px-[25px] h-[calc(100vh)] md:h-[600px] flex flex-col rounded-t-lg md:rounded-lg rounded-b-none md:rounded-b-lg relative border-[rgba(243,46,200,0.6)]"
+          className="px-4 md:px-[25px] h-[calc(100vh)] md:h-[600px] flex flex-col rounded-t-lg md:rounded-lg rounded-b-none md:rounded-b-lg relative border-[rgba(243,46,200,0.6)]"
           style={{
-            width: "calc(100vw - 50px)",
+            width: "calc(100vw - 12px)",
             maxWidth: "1450px",
           }}
           align="center"
           side="bottom"
-          sideOffset={10}
+          sideOffset={deviceType === "desktop" ? 28 : 15}
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <div className="flex-1 overflow-y-auto scrollbar-hide">
