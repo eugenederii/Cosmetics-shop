@@ -5,7 +5,7 @@ import { ProductCardProps } from "./product-card.interface";
 
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
+    <div className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-transparent hover:border-[rgba(243,46,200,0.6)] flex flex-col h-full">
       <div className="aspect-square overflow-hidden">
         {product.featuredImage?.url ? (
           <Image
@@ -22,7 +22,7 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
         )}
       </div>
 
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-1">
         <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2">
           {product.title}
         </h3>
@@ -31,12 +31,14 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
           {product.description}
         </p>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-auto">
           <span className="text-lg font-bold text-gray-900">$99.99</span>
 
           <Button
+            variant="pink"
             size="sm"
             onClick={() => console.log("Add to cart:", product.id)}
+            className="opacity-0 group-hover:opacity-100 transition-opacity duration-800 ease-in-out"
           >
             В кошик
           </Button>
